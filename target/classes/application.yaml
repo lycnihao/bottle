@@ -1,0 +1,32 @@
+spring:
+  datasource:
+    # H2 database configuration.
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:file:~/.bottle/db/bottle
+    username: admin
+    password: 123456
+
+  h2:
+    console:
+      settings:
+        web-allow-others: false
+      path: /h2-console
+      enabled: false
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    open-in-view: false
+
+  servlet:
+    multipart:
+      max-file-size: 10240MB
+      max-request-size: 10240MB
+      location: ${java.io.tmpdir}
+
+logging:
+  level:
+    run.bottle.app: INFO
+  file:
+    path: ${user.home}/.bottle/logs
