@@ -1,6 +1,7 @@
 package run.bottle.app.service.impl;
 
 import cn.hutool.core.lang.Validator;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -42,6 +43,10 @@ public class AdminServiceImpl implements AdminService {
                     userService.getByEmailOfNonNull(username) : userService.getByUsernameOfNonNull(username);
         } catch (NotFoundException e) {
             throw new ServiceException(mismatchTip);
+        }
+
+        if (ObjectUtils.isEmpty(user)) {
+            throw new ServiceException("账号或密码不匹配");
         }
 
         userService.mustNotExpire(user);
@@ -93,6 +98,8 @@ public class AdminServiceImpl implements AdminService {
         // Cache those tokens with user id
         localCache.put(SecurityUtils.buildTokenAccessKey(token.getAccessToken()), user.getId(), ACCESS_TOKEN_EXPIRED_SECONDS);
         localCache.put(SecurityUtils.buildTokenRefreshKey(token.getRefreshToken()), user.getId(), REFRESH_TOKEN_EXPIRED_DAYS);
+
+        SecurityContextHolder.setContext(new UserDetail(user));
         return token;
     }
 }

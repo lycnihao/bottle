@@ -29,7 +29,7 @@ public class AppApplication {
      */
     private final static String INSTALL_REDIRECT_URI = INDEX_REDIRECT_URI + "#install";
 
-    @GetMapping("admin")
+    @GetMapping("${bottle.admin-path:admin}")
     public void admin(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String adminIndexRedirectUri = StringUtils.appendIfMissing("admin", "/") + INDEX_REDIRECT_URI;
         System.out.println("INDEX_REDIRECT_URI-"+INDEX_REDIRECT_URI);
@@ -39,7 +39,6 @@ public class AppApplication {
     @GetMapping("install")
     public void installation(HttpServletResponse response) throws IOException {
         String installRedirectUri = StringUtils.appendIfMissing("admin", "/") + INSTALL_REDIRECT_URI;
-        System.out.println(installRedirectUri);
         response.sendRedirect(installRedirectUri);
     }
 

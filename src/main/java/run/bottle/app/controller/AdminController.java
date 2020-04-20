@@ -12,6 +12,7 @@ import run.bottle.app.service.AdminService;
 import javax.validation.Valid;
 
 @RestController
+@RequestMapping("api/admin")
 public class AdminController {
 
     private final AdminService adminService;
@@ -21,17 +22,17 @@ public class AdminController {
     }
 
 
-    @PostMapping("admin/login")
+    @PostMapping("login")
     public AuthToken auth(@RequestBody @Valid LoginParam loginParam) {
         return adminService.authenticate(loginParam.getUsername(), loginParam.getPassword());
     }
 
-    @PostMapping("admin/logout")
+    @PostMapping("logout")
     public void logout() {
         adminService.clearToken();
     }
 
-    @GetMapping("admin/info")
+    @GetMapping("info")
     public BaseResponse getUserInfo() {
         UserDetail userDetail = SecurityContextHolder.getContext();
         if (!ObjectUtils.isEmpty(userDetail) && !ObjectUtils.isEmpty(userDetail.getUser())) {

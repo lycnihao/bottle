@@ -1,5 +1,7 @@
 package run.bottle.app.security.filter;
 
+import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.lang.Nullable;
@@ -12,6 +14,8 @@ import run.bottle.app.exception.BottleException;
 import run.bottle.app.model.entity.User;
 import run.bottle.app.model.support.UserDetail;
 import run.bottle.app.security.context.SecurityContextHolder;
+import run.bottle.app.security.handler.AuthenticationFailureHandler;
+import run.bottle.app.security.handler.DefaultAuthenticationFailureHandler;
 import run.bottle.app.security.util.SecurityUtils;
 import run.bottle.app.service.UserService;
 
@@ -28,10 +32,13 @@ import static run.bottle.app.model.support.BottleConst.API_ACCESS_KEY_HEADER_NAM
  * @author lycheng
  * @date 2020/4/18 20:57
  */
+@Slf4j
 @Component
 public class AdminAuthenticationInterceptor implements HandlerInterceptor {
 
     private final LocalCache localCache;
+
+    private final AuthenticationFailureHandler failureHandler = new DefaultAuthenticationFailureHandler();
 
     public AdminAuthenticationInterceptor(LocalCache localCache, UserService userService) {
         this.localCache = localCache;
@@ -45,21 +52,22 @@ public class AdminAuthenticationInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String token = getTokenFromRequest(request);
+        log.debug("request token:" + token);
         if (StringUtils.isBlank(token)) {
-            onFailure(request, response, new AuthenticationException("未登录，请登陆后访问"));
+            failureHandler.onFailure(request, response, new AuthenticationException("未登录，请登陆后访问"));
             return false;
         }
 
         // 从缓存中获取用户ID
         Object object = localCache.get(SecurityUtils.buildTokenAccessKey(token));
         if (ObjectUtils.isEmpty(object)){
-            onFailure(request, response, new AuthenticationException("Token 已过期或不存在").setErrorData(token));
+            failureHandler.onFailure(request, response, new AuthenticationException("Token 已过期或不存在").setErrorData(token));
             return false;
         }
 
         // 获取用户
         User user = userService.getById(Integer.valueOf(object.toString()));
-        System.out.println(user);
+        log.debug(user.toString());
         //保存用户信息
         SecurityContextHolder.setContext(new UserDetail(user));
 
@@ -81,15 +89,7 @@ public class AdminAuthenticationInterceptor implements HandlerInterceptor {
         // Get from param
         if (StringUtils.isBlank(accessKey)) {
             accessKey = request.getParameter(API_ACCESS_KEY_HEADER_NAME);
-            System.out.println(accessKey);
-        } else {
-            System.out.println(accessKey);
         }
-
         return accessKey;
-    }
-
-    public void onFailure(HttpServletRequest request, HttpServletResponse response, BottleException exception) throws IOException, ServletException {
-        request.getRequestDispatcher(request.getContextPath() + "/error").forward(request, response);
     }
 }

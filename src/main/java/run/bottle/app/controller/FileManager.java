@@ -29,7 +29,7 @@ import java.util.*;
  * @date 2020/4/18 20:57
  */
 @RestController
-@RequestMapping(value = "fileManager")
+@RequestMapping(value = "api/admin/fileManager")
 public class FileManager {
 
     private final String workDir;

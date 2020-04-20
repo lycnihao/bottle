@@ -27,30 +27,24 @@ public class WebMvcAutoConfiguration implements WebMvcConfigurer {
 
     private final AdminAuthenticationInterceptor adminAuthenticationInterceptor;
 
-    private final LogFilter logFilter;
 
-    public WebMvcAutoConfiguration(AdminAuthenticationInterceptor adminAuthenticationInterceptor, LogFilter logFilter) {
+    public WebMvcAutoConfiguration(AdminAuthenticationInterceptor adminAuthenticationInterceptor) {
         this.adminAuthenticationInterceptor = adminAuthenticationInterceptor;
-        this.logFilter = logFilter;
     }
 
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(logFilter)
-                .addPathPatterns("/**")
-                .excludePathPatterns("/admin/index.html")
-                .excludePathPatterns("/install");
-
         registry.addInterceptor(adminAuthenticationInterceptor)
                 .addPathPatterns("/**")
+                .addPathPatterns("/api/**")
                 .excludePathPatterns("/upload/**")
-                .excludePathPatterns("/admin")
-                .excludePathPatterns("/admin/login")
-                .excludePathPatterns("/admin/index.html")
+                .excludePathPatterns("/admin/**")
+                .excludePathPatterns("/js/**")
+                .excludePathPatterns("/css/**")
+                .excludePathPatterns("/api/admin/login")
                 .excludePathPatterns("/install")
-                .excludePathPatterns("/error")
-                .excludePathPatterns( "/js/**","/css/**");
+                .excludePathPatterns("/error");
     }
 
     @Override
@@ -61,10 +55,7 @@ public class WebMvcAutoConfiguration implements WebMvcConfigurer {
         registry.addResourceHandler("upload/**")
                 .addResourceLocations(FILE_PROTOCOL + workDir + "upload/");
 
-        registry.addResourceHandler("/**")
-                .addResourceLocations("classpath:/templates/admin/");
-
-        registry.addResourceHandler("admin/**")
+        registry.addResourceHandler("/**","admin/**")
                 .addResourceLocations("classpath:/templates/admin/");
     }
 }

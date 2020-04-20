@@ -24,7 +24,6 @@ import java.io.IOException;
  * @date 2020/4/18 20:57
  */
 @Slf4j
-@Component
 public class LogFilter implements HandlerInterceptor {
 
     public LogFilter(UserService userService) {
