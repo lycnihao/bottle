@@ -33,9 +33,6 @@
       <change afterPath="$PROJECT_DIR$/src/main/java/run/bottle/app/security/AuthToken.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/java/run/bottle/app/security/context/SecurityContextHolder.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/java/run/bottle/app/security/filter/AdminAuthenticationInterceptor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/run/bottle/app/security/handler/AuthenticationFailureHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/run/bottle/app/security/handler/ContentAuthenticationFailureHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/run/bottle/app/security/handler/DefaultAuthenticationFailureHandler.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/java/run/bottle/app/security/util/SecurityUtils.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/java/run/bottle/app/service/AdminService.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/java/run/bottle/app/service/UserService.java" afterDir="false" />
@@ -47,46 +44,16 @@
       <change afterPath="$PROJECT_DIR$/src/main/java/run/bottle/app/utils/FileUtils.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/resources/application.yaml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/test/java/run/bottle/app/UserTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/run/bottle/app/AppApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/run/bottle/app/AppApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/run/bottle/app/config/WebMvcAutoConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/run/bottle/app/config/WebMvcAutoConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/run/bottle/app/controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/run/bottle/app/controller/AdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/run/bottle/app/controller/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/run/bottle/app/controller/FileManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/run/bottle/app/filter/LogFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/run/bottle/app/filter/LogFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/run/bottle/app/security/filter/AdminAuthenticationInterceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/run/bottle/app/security/filter/AdminAuthenticationInterceptor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/run/bottle/app/service/impl/AdminServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/run/bottle/app/service/impl/AdminServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/assets/background.a568162c.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/assets/iconfont.daf5c6cd.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/assets/iconfont.573255ce.svg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/assets/logo.b36f7a7f.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/avatar2.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/css/app.a111d3d5.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/css/chunk-4ded349c.7576506a.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/css/chunk-vendors.02795d31.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/css/user.3915acbe.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/js/app.127867e3.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/js/chunk-359fe776.f30c6329.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/js/chunk-4ded349c.fd12f2b5.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/js/chunk-vendors.8c3561ac.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/js/fail.c7fbc258.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/js/user.dcc77d30.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/loading/loading.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/loading/loading.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/loading/option2/html_code_segment.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/loading/option2/loading.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/loading/option2/loading.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/admin/assets/iconfont.daf5c6cd.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/admin/css/chunk-4ded349c.7576506a.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/admin/css/chunk-vendors.02795d31.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/css/chunk-60f43854.4863c4f9.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/js/app.5cb3701a.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/js/chunk-60f43854.62e0393a.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/templates/admin/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/admin/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/admin/js/app.127867e3.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/admin/js/chunk-359fe776.f30c6329.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/admin/js/chunk-4ded349c.fd12f2b5.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/admin/js/chunk-vendors.8c3561ac.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/admin/js/fail.c7fbc258.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/admin/js/user.dcc77d30.js" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -104,11 +71,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/run/bottle/app/AppApplication.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="192">
-              <caret line="28" column="7" selection-start-line="28" selection-start-column="7" selection-end-line="28" selection-end-column="7" />
+            <state relative-caret-position="248">
+              <caret line="29" column="87" selection-start-line="29" selection-start-column="87" selection-end-line="29" selection-end-column="87" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/run/bottle/app/config/WebMvcAutoConfiguration.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="392">
+              <caret line="43" column="47" selection-start-line="43" selection-start-column="47" selection-end-line="43" selection-end-column="47" />
             </state>
           </provider>
         </entry>
@@ -213,6 +189,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -262,32 +239,10 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="bottle" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bottle" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bottle" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bottle" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bottle" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bottle" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -299,17 +254,21 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources/templates/admin" />
+    <property name="last_opened_file_path" value="F:/开源项目/halo-1.2.0" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="fileTemplates" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="F:\个人git项目\bottle\src\main\resources\templates\admin" />
-    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="run.bottle.app.model" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\个人git项目\bottle\src\main\resources\templates\admin" />
+      <recent name="F:\个人git项目\bottle\src\main\java\run\bottle\app\security" />
+      <recent name="F:\个人git项目\bottle\src\main\java\run\bottle\app\service" />
+      <recent name="F:\个人git项目\bottle\src\main\java\run\bottle\app" />
+      <recent name="F:\个人git项目\bottle\src\main\resources" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="run.bottle.app.filter" />
@@ -318,12 +277,8 @@
       <recent name="run.bottle.app.model.params" />
       <recent name="run.bottle.app.controller" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
+    <key name="MoveFile.RECENT_KEYS">
       <recent name="F:\个人git项目\bottle\src\main\resources\templates\admin" />
-      <recent name="F:\个人git项目\bottle\src\main\java\run\bottle\app\security" />
-      <recent name="F:\个人git项目\bottle\src\main\java\run\bottle\app\service" />
-      <recent name="F:\个人git项目\bottle\src\main\java\run\bottle\app" />
-      <recent name="F:\个人git项目\bottle\src\main\resources" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -381,7 +336,8 @@
       <workItem from="1587214094247" duration="12838000" />
       <workItem from="1587261227351" duration="22002000" />
       <workItem from="1587382566551" duration="4814000" />
-      <workItem from="1587387421375" duration="5280000" />
+      <workItem from="1587387421375" duration="5728000" />
+      <workItem from="1587469341319" duration="4555000" />
     </task>
     <servers />
   </component>
@@ -397,13 +353,13 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="44934000" />
+    <option name="totallyTimeSpent" value="49937000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49838188" visible="true" weight="0.25799572" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49838188" visible="true" weight="0.21695095" />
       <window_info id="Structure" order="1" sideWeight="0.50161815" side_tool="true" weight="0.25266525" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -816,17 +772,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/run/bottle/app/config/WebMvcAutoConfiguration.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/run/bottle/app/AppApplication.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="388">
-          <caret line="58" selection-start-line="58" selection-end-line="58" />
+        <state relative-caret-position="248">
+          <caret line="29" column="87" selection-start-line="29" selection-start-column="87" selection-end-line="29" selection-end-column="87" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/run/bottle/app/AppApplication.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/run/bottle/app/config/WebMvcAutoConfiguration.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="28" column="7" selection-start-line="28" selection-start-column="7" selection-end-line="28" selection-end-column="7" />
+        <state relative-caret-position="392">
+          <caret line="43" column="47" selection-start-line="43" selection-start-column="47" selection-end-line="43" selection-end-column="47" />
         </state>
       </provider>
     </entry>
