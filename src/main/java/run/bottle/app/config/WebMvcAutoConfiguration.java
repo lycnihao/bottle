@@ -40,8 +40,7 @@ public class WebMvcAutoConfiguration implements WebMvcConfigurer {
                 .addPathPatterns("/api/**")
                 .excludePathPatterns("/upload/**")
                 .excludePathPatterns("/admin/**")
-                .excludePathPatterns("/js/**")
-                .excludePathPatterns("/css/**")
+                .excludePathPatterns("/js/**","/css/**","/assets/**","/logo.png")
                 .excludePathPatterns("/api/admin/login")
                 .excludePathPatterns("/install")
                 .excludePathPatterns("/error");
@@ -57,5 +56,11 @@ public class WebMvcAutoConfiguration implements WebMvcConfigurer {
 
         registry.addResourceHandler("/**","admin/**")
                 .addResourceLocations("classpath:/templates/admin/");
+
+ /*       registry.addResourceHandler("/assets")
+                .addResourceLocations("classpath:/templates/admin/assets");
+
+        registry.addResourceHandler("/logo.png")
+                .addResourceLocations("classpath:/templates/admin/logo.png");*/
     }
 }

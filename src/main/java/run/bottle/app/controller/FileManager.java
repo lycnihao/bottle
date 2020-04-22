@@ -62,7 +62,6 @@ public class FileManager {
                 fileItem.setSize(attrs.size());
                 fileItem.setIsDirectory(attrs.isDirectory());
                 fileItem.setMediaType( attrs.isDirectory() || StringUtils.isEmpty(mediaType) ? null : MediaType.valueOf(mediaType).toString());
-                System.out.println(fileItem);
                 fileItems.add(fileItem);
             }
         } catch (IOException e) {
@@ -80,8 +79,17 @@ public class FileManager {
         Path path = Paths.get(workDir, destination);
         // 上传文件
         try {
-            Files.createFile(Paths.get(path.toString(), FileConst.DELIMITER , file.getOriginalFilename()));
-            file.transferTo(Paths.get(path.toString(), FileConst.DELIMITER , file.getOriginalFilename()));
+            String fileName = file.getOriginalFilename();
+            String prefix = "";
+            if (Objects.requireNonNull(file.getOriginalFilename()).contains("/")){
+                prefix = run.bottle.app.utils.FileUtils.prefixName(file.getOriginalFilename());
+                fileName = run.bottle.app.utils.FileUtils.suffixName(file.getOriginalFilename());
+                Files.createDirectories(Paths.get(path.toString(), FileConst.DELIMITER, prefix));
+                System.out.println(Paths.get(path.toString(), FileConst.DELIMITER, prefix));
+            }
+
+            Files.createFile(Paths.get(path.toString(), FileConst.DELIMITER ,prefix + fileName));
+            file.transferTo(Paths.get(path.toString(), FileConst.DELIMITER , prefix + fileName));
             FileItemDTO fileItemDTO = new FileItemDTO();
             fileItemDTO.setName(file.getOriginalFilename());
             fileItemDTO.setMediaType(MediaType.valueOf(Objects.requireNonNull(file.getContentType())).toString());

@@ -51,4 +51,27 @@ public class FileUtils {
         return folderNodes;
     }
 
+    public static String prefixName(String name){
+        return prefix(name, "/");
+    }
+
+    public static String suffixName(String name){
+        return suffix(name, "/");
+    }
+
+    private static String prefix(String name,String regex){
+        int index = name.lastIndexOf("/");
+        if (index == -1){
+            return null;
+        }
+        return name.substring(0,index);
+    }
+
+    private static String suffix(String name,String regex){
+        int index = name.lastIndexOf("/");
+        if (index == -1){
+            return null;
+        }
+        return name.substring(index);
+    }
 }
