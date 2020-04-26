@@ -30,3 +30,7 @@ logging:
     run.bottle.app: INFO
   file:
     path: ${user.home}/.bottle/logs
+
+
+admin:
+  upload-folder: ./files

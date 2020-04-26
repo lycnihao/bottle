@@ -4,7 +4,6 @@ import cn.hutool.crypto.digest.BCrypt;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-import org.springframework.util.CollectionUtils;
 import run.bottle.app.exception.ForbiddenException;
 import run.bottle.app.model.entity.User;
 import run.bottle.app.repository.UserRepository;
@@ -13,8 +12,6 @@ import run.bottle.app.service.base.AbstractCrudService;
 import run.bottle.app.utils.BottleUtils;
 
 import java.util.Date;
-import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 @Service

@@ -2,6 +2,8 @@ package run.bottle.app.controller;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +13,10 @@ import run.bottle.app.model.dto.FileItemDTO;
 import run.bottle.app.model.dto.FolderNode;
 import run.bottle.app.model.support.BaseResponse;
 import run.bottle.app.model.support.FileConst;
+import run.bottle.app.service.ChunkService;
+import run.bottle.app.service.FileInfoService;
 
+import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
@@ -32,11 +37,8 @@ import java.util.*;
 @RequestMapping(value = "api/admin/fileManager")
 public class FileManager {
 
-    private final String workDir;
-
-    public FileManager() {
-        workDir = FileConst.USER_HOME + FileConst.DELIMITER + ".bottle" + FileConst.DELIMITER + "upload/";
-    }
+    @Value("${admin.upload-folder}")
+    private String workDir;
 
     /**
      * 展示文件列表
@@ -69,37 +71,6 @@ public class FileManager {
             throw new ServiceException("文件获取异常");
         }
         return BaseResponse.ok(fileItems.stream().sorted(Comparator.comparing(FileItemDTO::getIsDirectory).reversed()));
-    }
-
-    /**
-     * 文件上传
-     */
-    @RequestMapping("upload")
-    public FileItemDTO upload(@RequestPart("file") MultipartFile file, @RequestParam(value = "path", defaultValue = "root") String destination) {
-        Path path = Paths.get(workDir, destination);
-        // 上传文件
-        try {
-            String fileName = file.getOriginalFilename();
-            String prefix = "";
-            if (Objects.requireNonNull(file.getOriginalFilename()).contains("/")){
-                prefix = run.bottle.app.utils.FileUtils.prefixName(file.getOriginalFilename());
-                fileName = run.bottle.app.utils.FileUtils.suffixName(file.getOriginalFilename());
-                Files.createDirectories(Paths.get(path.toString(), FileConst.DELIMITER, prefix));
-                System.out.println(Paths.get(path.toString(), FileConst.DELIMITER, prefix));
-            }
-
-            Files.createFile(Paths.get(path.toString(), FileConst.DELIMITER ,prefix + fileName));
-            file.transferTo(Paths.get(path.toString(), FileConst.DELIMITER , prefix + fileName));
-            FileItemDTO fileItemDTO = new FileItemDTO();
-            fileItemDTO.setName(file.getOriginalFilename());
-            fileItemDTO.setMediaType(MediaType.valueOf(Objects.requireNonNull(file.getContentType())).toString());
-            fileItemDTO.setSize(file.getSize());
-            fileItemDTO.setIsDirectory(false);
-            return fileItemDTO;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 
     /**
@@ -213,4 +184,35 @@ public class FileManager {
     private List<FolderNode> getFolderNode(){
         return run.bottle.app.utils.FileUtils.getAllFolderNode();
     }
+
+    /**
+     * 文件上传
+     */
+    /*@RequestMapping("upload")
+    public FileItemDTO upload(@RequestPart("file") MultipartFile file, @RequestParam(value = "path", defaultValue = "root") String destination) {
+        Path path = Paths.get(workDir, destination);
+        // 上传文件
+        try {
+            String fileName = file.getOriginalFilename();
+            String prefix = "";
+            if (Objects.requireNonNull(file.getOriginalFilename()).contains("/")){
+                prefix = run.bottle.app.utils.FileUtils.prefixName(file.getOriginalFilename());
+                fileName = run.bottle.app.utils.FileUtils.suffixName(file.getOriginalFilename());
+                Files.createDirectories(Paths.get(path.toString(), FileConst.DELIMITER, prefix));
+                System.out.println(Paths.get(path.toString(), FileConst.DELIMITER, prefix));
+            }
+
+            Files.createFile(Paths.get(path.toString(), FileConst.DELIMITER ,prefix + fileName));
+            file.transferTo(Paths.get(path.toString(), FileConst.DELIMITER , prefix + fileName));
+            FileItemDTO fileItemDTO = new FileItemDTO();
+            fileItemDTO.setName(file.getOriginalFilename());
+            fileItemDTO.setMediaType(MediaType.valueOf(Objects.requireNonNull(file.getContentType())).toString());
+            fileItemDTO.setSize(file.getSize());
+            fileItemDTO.setIsDirectory(false);
+            return fileItemDTO;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }*/
 }
