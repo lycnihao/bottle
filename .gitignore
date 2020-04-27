@@ -1,5 +1,7 @@
 target/* 
 
+files/*
+
 # Compiled class file
 *.class
 

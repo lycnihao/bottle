@@ -1,11 +1,10 @@
 package run.bottle.app.model.entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -14,6 +13,8 @@ import java.io.Serializable;
  */
 @Data
 @Entity
+@Table(name = "file_info")
+@ToString(callSuper = true)
 public class FileInfo implements Serializable {
     @Id
     @GeneratedValue

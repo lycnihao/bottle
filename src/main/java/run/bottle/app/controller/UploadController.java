@@ -2,10 +2,7 @@ package run.bottle.app.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import run.bottle.app.model.entity.Chunk;
 import run.bottle.app.model.entity.FileInfo;
@@ -25,7 +22,7 @@ import static run.bottle.app.utils.FileUtils.merge;
 
 
 @RestController
-@RequestMapping("/uploader")
+@RequestMapping("api/admin/uploader")
 @Slf4j
 public class UploadController {
 
@@ -83,7 +80,7 @@ public class UploadController {
      * @return
      */
     @PostMapping("/mergeFile")
-    public String mergeFile(FileInfo fileInfo) {
+    public String mergeFile(@RequestBody FileInfo fileInfo) {
         String filename = fileInfo.getFilename();
         String file = uploadFolder + "/" + fileInfo.getIdentifier() + "/" + filename;
         String folder = uploadFolder + "/" + fileInfo.getIdentifier();

@@ -1,6 +1,7 @@
 package run.bottle.app.model.entity;
 
 import lombok.Data;
+import lombok.ToString;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
@@ -12,6 +13,8 @@ import java.io.Serializable;
  */
 @Data
 @Entity
+@Table(name = "chunk")
+@ToString(callSuper = true)
 public class Chunk implements Serializable {
     @Id
     @GeneratedValue
