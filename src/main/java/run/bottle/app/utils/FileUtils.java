@@ -75,6 +75,20 @@ public class FileUtils {
         return name.substring(index);
     }
 
+    public static Path generatePath(Path path) {
+        //判断路径是否存在，不存在则创建
+        if (!Files.isWritable(path)) {
+            log.info("path not exist,create path: {}", path);
+            try {
+                Files.createDirectories(path);
+            } catch (IOException e) {
+                log.error(e.getMessage(), e);
+            }
+        }
+
+        return path;
+    }
+
     public static String generatePath(String uploadFolder, Chunk chunk) {
         StringBuilder sb = new StringBuilder();
         sb.append(uploadFolder).append("/").append(chunk.getIdentifier());

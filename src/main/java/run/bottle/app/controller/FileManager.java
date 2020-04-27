@@ -1,5 +1,7 @@
 package run.bottle.app.controller;
 
+import static run.bottle.app.utils.FileUtils.generatePath;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +51,7 @@ public class FileManager {
         // 返回的结果集
         List<FileItemDTO> fileItems = new ArrayList<>();
 
-        try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(Paths.get(workDir ,path))) {
+        try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(generatePath(Paths.get(workDir ,path)))) {
 
             String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
             SimpleDateFormat dt = new SimpleDateFormat(DATE_FORMAT);
