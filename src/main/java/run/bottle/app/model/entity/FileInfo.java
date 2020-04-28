@@ -21,7 +21,7 @@ public class FileInfo implements Serializable {
     private Long id;
 
     @Column(nullable = false)
-    private String filename;
+    private String fileName;
 
     @Column(nullable = false)
     private String identifier;

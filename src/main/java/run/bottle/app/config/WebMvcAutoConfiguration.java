@@ -1,13 +1,17 @@
 package run.bottle.app.config;
 
+import java.nio.file.Paths;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import run.bottle.app.filter.LogFilter;
+import run.bottle.app.model.support.FileConst;
 import run.bottle.app.security.filter.AdminAuthenticationInterceptor;
+import run.bottle.app.utils.FileUtils;
 
 import static run.bottle.app.model.support.FileConst.DELIMITER;
 import static run.bottle.app.model.support.FileConst.USER_HOME;
@@ -24,6 +28,9 @@ import static run.bottle.app.model.support.FileConst.USER_HOME;
 public class WebMvcAutoConfiguration implements WebMvcConfigurer {
 
     private static final String FILE_PROTOCOL = "file:///";
+
+    @Value("${admin.upload-folder}")
+    private String uploadFolder;
 
     private final AdminAuthenticationInterceptor adminAuthenticationInterceptor;
 
@@ -50,10 +57,14 @@ public class WebMvcAutoConfiguration implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
-        String workDir = USER_HOME + DELIMITER + ".bottle" + DELIMITER;
+        if (uploadFolder != null) {
+            FileUtils.setWorkDir(uploadFolder);
+        }
+
+        String workDir = Paths.get(FileUtils.getWorkDir()).toAbsolutePath().toString() + DELIMITER;
 
         registry.addResourceHandler("upload/**")
-                .addResourceLocations(FILE_PROTOCOL + workDir + "upload/");
+                .addResourceLocations(FILE_PROTOCOL + workDir);
 
         registry.addResourceHandler("/**","admin/**")
                 .addResourceLocations("classpath:/templates/admin/");

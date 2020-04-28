@@ -1,8 +1,8 @@
 package run.bottle.app.utils;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import run.bottle.app.exception.ServiceException;
-import run.bottle.app.model.dto.FileItemDTO;
 import run.bottle.app.model.dto.FolderNode;
 import run.bottle.app.model.entity.Chunk;
 import run.bottle.app.model.support.FileConst;
@@ -22,7 +22,18 @@ import static run.bottle.app.model.support.FileConst.DELIMITER;
 @Slf4j
 public class FileUtils {
 
-    private static final String workDir = FileConst.USER_HOME + DELIMITER + ".bottle" + DELIMITER + "upload/";
+    private static String workDir;
+
+    public static void setWorkDir(String dir) {
+        workDir = dir;
+    }
+
+    public static String getWorkDir() {
+        if (workDir == null) {
+            return FileConst.USER_HOME + DELIMITER + ".bottle" + DELIMITER + "upload/";
+        }
+        return workDir;
+    }
 
     public static List<FolderNode> getAllFolderNode(){
         return getFolderNode("root");
@@ -30,7 +41,7 @@ public class FileUtils {
 
     public static List<FolderNode> getFolderNode(String path){
         List<FolderNode> folderNodes = new ArrayList<>();
-        try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(Paths.get(workDir,path))) {
+        try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(Paths.get(getWorkDir(),path))) {
 
             for (Path pathObj : directoryStream) {
                 // 获取文件基本属性
@@ -117,7 +128,7 @@ public class FileUtils {
     public static void merge(String targetFile, String folder, String filename) {
         try {
             Files.createFile(Paths.get(targetFile));
-            Files.list(Paths.get(folder))
+            Files.list(FileUtils.generatePath(Paths.get(folder)))
                     .filter(path -> !path.getFileName().toString().equals(filename))
                     .sorted((o1, o2) -> {
                         String p1 = o1.getFileName().toString();
@@ -136,6 +147,7 @@ public class FileUtils {
                             log.error(e.getMessage(), e);
                         }
                     });
+          Files.delete(Paths.get(folder));
         } catch (IOException e) {
             log.error(e.getMessage(), e);
         }

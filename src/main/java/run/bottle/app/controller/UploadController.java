@@ -17,6 +17,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import static run.bottle.app.utils.FileUtils.generatePath;
+import static run.bottle.app.utils.FileUtils.getWorkDir;
 import static run.bottle.app.utils.FileUtils.merge;
 
 
@@ -26,8 +27,7 @@ import static run.bottle.app.utils.FileUtils.merge;
 @Slf4j
 public class UploadController {
 
-    @Value("${admin.upload-folder}")
-    private String uploadFolder;
+    private String uploadFolder = getWorkDir();
 
     @Resource
     private FileInfoService fileInfoService;
@@ -81,8 +81,8 @@ public class UploadController {
      */
     @PostMapping("/mergeFile")
     public String mergeFile(@RequestBody FileInfo fileInfo) {
-        String filename = fileInfo.getFilename();
-        String file = uploadFolder + "/" + fileInfo.getIdentifier() + "/" + filename;
+        String filename = fileInfo.getFileName();
+        String file = uploadFolder + "/root/" + filename;
         String folder = uploadFolder + "/" + fileInfo.getIdentifier();
         merge(file, folder, filename);
         fileInfo.setLocation(file);
