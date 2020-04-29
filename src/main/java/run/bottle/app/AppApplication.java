@@ -3,6 +3,10 @@ package run.bottle.app;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.embedded.tomcat.TomcatConnectorCustomizer;
+import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
+import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -18,14 +22,20 @@ public class AppApplication {
         SpringApplication.run(AppApplication.class, args);
     }
 
+    @Bean
+    public ConfigurableServletWebServerFactory webServerFactory() {
+        TomcatServletWebServerFactory factory = new TomcatServletWebServerFactory();
+        factory.addConnectorCustomizers((TomcatConnectorCustomizer) connector -> connector.setProperty("relaxedQueryChars", "|{}[]\\"));
+        return factory;
+    }
 
     /**
-     * Index redirect uri.
+     * 后台重定向路径
      */
     private final static String INDEX_REDIRECT_URI = "index.html";
 
     /**
-     * Install redirect uri.
+     * 安装路径
      */
     private final static String INSTALL_REDIRECT_URI = INDEX_REDIRECT_URI + "#install";
 

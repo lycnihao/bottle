@@ -33,4 +33,4 @@ logging:
 
 
 admin:
-  upload-folder: ./files
+  upload-folder: ./files/

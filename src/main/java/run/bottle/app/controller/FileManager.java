@@ -1,24 +1,19 @@
 package run.bottle.app.controller;
 
 import static run.bottle.app.utils.FileUtils.generatePath;
+import static run.bottle.app.utils.FileUtils.getWorkDir;
 
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileExistsException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import run.bottle.app.exception.ServiceException;
 import run.bottle.app.model.dto.FileItemDTO;
 import run.bottle.app.model.dto.FolderNode;
 import run.bottle.app.model.support.BaseResponse;
-import run.bottle.app.model.support.FileConst;
-import run.bottle.app.service.ChunkService;
-import run.bottle.app.service.FileInfoService;
-
-import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
@@ -35,12 +30,10 @@ import java.util.*;
  * @author lycheng
  * @date 2020/4/18 20:57
  */
+@Slf4j
 @RestController
 @RequestMapping(value = "api/admin/fileManager")
 public class FileManager {
-
-    @Value("${admin.upload-folder}")
-    private String workDir;
 
     /**
      * 展示文件列表
@@ -51,7 +44,7 @@ public class FileManager {
         // 返回的结果集
         List<FileItemDTO> fileItems = new ArrayList<>();
 
-        try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(generatePath(Paths.get(workDir ,path)))) {
+        try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(generatePath(Paths.get(getWorkDir() ,path)))) {
 
             String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
             SimpleDateFormat dt = new SimpleDateFormat(DATE_FORMAT);
@@ -61,7 +54,7 @@ public class FileManager {
                 String mediaType = Files.probeContentType(pathObj);
 
                 FileItemDTO fileItem = new FileItemDTO();
-                fileItem.setName(pathObj.getFileName().toString());
+                fileItem.setName(pathObj.getFileName().toString() );
                 fileItem.setDate(dt.format(new Date(attrs.lastModifiedTime().toMillis())));
                 fileItem.setSize(attrs.size());
                 fileItem.setIsDirectory(attrs.isDirectory());
@@ -81,14 +74,16 @@ public class FileManager {
     @RequestMapping("createFolder")
     public BaseResponse createFolder(@RequestParam(value = "path") String newPath) {
         try {
-            File newDir = new File(workDir + newPath);
-            System.out.println("创建文件夹-->" + newDir);
+            File newDir = new File(getWorkDir() + newPath);
+            log.info("创建文件夹-->",newDir);
             if (!newDir.mkdir()) {
-                throw new Exception("不能创建目录: " + newPath);
+                log.error("目录【{}】已存在，不能重复创建",newDir);
+                throw new ServiceException("目录【" + newPath + "】已存在，不能重复创建");
             }
             return BaseResponse.ok("创建成功");
         } catch (Exception e) {
-            throw new ServiceException("创建文件夹失败").setErrorData(e);
+            e.printStackTrace();
+            throw new ServiceException(e.getMessage()).setErrorData(e);
         }
     }
 
@@ -97,10 +92,15 @@ public class FileManager {
      */
     @RequestMapping("rename")
     public BaseResponse rename(@RequestParam(value = "path") String path, @RequestParam(value = "newPath") String newPath) {
-        try {
 
-            File srcFile = new File(workDir, path);
-            File destFile = new File(workDir, newPath);
+        if (path.equals(newPath)) {
+            return BaseResponse.ok("保存成功");
+        }
+
+        try {
+            File srcFile = new File(getWorkDir(), path);
+            File destFile = new File(getWorkDir(), newPath);
+
             if (srcFile.isFile()) {
                 FileUtils.moveFile(srcFile, destFile);
             } else {
@@ -123,8 +123,8 @@ public class FileManager {
             for (int i = 0; i < items.length; i++) {
                 String path = items[i];
 
-                File srcFile = new File(workDir, path);
-                File destFile = new File(workDir + newPath, srcFile.getName());
+                File srcFile = new File(getWorkDir(), path);
+                File destFile = new File(getWorkDir() + newPath, srcFile.getName());
 
                 FileCopyUtils.copy(srcFile, destFile);
             }
@@ -141,14 +141,15 @@ public class FileManager {
      */
     @RequestMapping("move")
     public Object move(@RequestParam(value = "paths") String paths, @RequestParam(value = "newPath") String newPath) {
+
         try {
             String[] items = paths.split(",");
 
             for (int i = 0; i < items.length; i++) {
                 String path = items[i];
 
-                File srcFile = new File(workDir, path);
-                File destFile = new File(workDir + newPath, srcFile.getName());
+                File srcFile = new File(getWorkDir() + path);
+                File destFile = new File(getWorkDir() + newPath, srcFile.getName());
 
                 if (srcFile.isFile()) {
                     FileUtils.moveFile(srcFile, destFile);
@@ -157,7 +158,11 @@ public class FileManager {
                 }
             }
             return BaseResponse.ok("保存成功");
-        } catch (Exception e) {
+        } catch (FileExistsException e) {
+            throw new ServiceException("目标文件已存在").setErrorData(e);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
             throw new ServiceException("保存失败").setErrorData(e);
         }
     }
@@ -171,13 +176,14 @@ public class FileManager {
             String[] items = paths.split(",");
             for (int i = 0; i < items.length; i++) {
                 String path = items[i];
-                File srcFile = new File(workDir, path);
+                File srcFile = new File(getWorkDir(), path);
                 if (!FileUtils.deleteQuietly(srcFile)) {
                     throw new ServiceException("删除失败: " + srcFile.getAbsolutePath());
                 }
             }
             return BaseResponse.ok("删除成功");
         } catch (Exception e) {
+            e.printStackTrace();
             throw new ServiceException("删除失败").setErrorData(e);
         }
     }

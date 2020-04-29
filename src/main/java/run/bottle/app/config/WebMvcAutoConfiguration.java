@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.util.UrlPathHelper;
 import run.bottle.app.filter.LogFilter;
 import run.bottle.app.model.support.FileConst;
 import run.bottle.app.security.filter.AdminAuthenticationInterceptor;
@@ -29,14 +31,18 @@ public class WebMvcAutoConfiguration implements WebMvcConfigurer {
 
     private static final String FILE_PROTOCOL = "file:///";
 
-    @Value("${admin.upload-folder}")
-    private String uploadFolder;
-
     private final AdminAuthenticationInterceptor adminAuthenticationInterceptor;
 
 
     public WebMvcAutoConfiguration(AdminAuthenticationInterceptor adminAuthenticationInterceptor) {
         this.adminAuthenticationInterceptor = adminAuthenticationInterceptor;
+    }
+
+    @Override
+    public void configurePathMatch(PathMatchConfigurer configurer) {
+        UrlPathHelper urlPathHelper = new UrlPathHelper();
+        urlPathHelper.setUrlDecode(false);
+        configurer.setUrlPathHelper(urlPathHelper);
     }
 
 
@@ -47,7 +53,7 @@ public class WebMvcAutoConfiguration implements WebMvcConfigurer {
                 .addPathPatterns("/api/**")
                 .excludePathPatterns("/upload/**")
                 .excludePathPatterns("/admin/**")
-                .excludePathPatterns("/js/**","/css/**","/assets/**","/logo.png")
+                .excludePathPatterns("/js/**","/css/**","/assets/**","/logo.png","/favicon.ico")
                 .excludePathPatterns("/api/admin/login")
                 .excludePathPatterns("/api/admin/fileManager/chunk")
                 .excludePathPatterns("/install")
@@ -56,10 +62,6 @@ public class WebMvcAutoConfiguration implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-
-        if (uploadFolder != null) {
-            FileUtils.setWorkDir(uploadFolder);
-        }
 
         String workDir = Paths.get(FileUtils.getWorkDir()).toAbsolutePath().toString() + DELIMITER;
 

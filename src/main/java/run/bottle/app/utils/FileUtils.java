@@ -1,7 +1,8 @@
 package run.bottle.app.utils;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Component;
 import run.bottle.app.exception.ServiceException;
 import run.bottle.app.model.dto.FolderNode;
 import run.bottle.app.model.entity.Chunk;
@@ -20,12 +21,13 @@ import static run.bottle.app.model.support.FileConst.DELIMITER;
  * @date: 2020/4/19 11:06
  */
 @Slf4j
+@Component
 public class FileUtils {
 
     private static String workDir;
 
-    public static void setWorkDir(String dir) {
-        workDir = dir;
+    public FileUtils(Environment environment) {
+        workDir = environment.getProperty("admin.upload-folder");
     }
 
     public static String getWorkDir() {
@@ -119,6 +121,9 @@ public class FileUtils {
                 .append(chunk.getChunkNumber()).toString();
     }
 
+    public static String specialName(String name){
+        return name;
+    }
     /**
      * 文件合并
      *
