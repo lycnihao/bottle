@@ -1,11 +1,13 @@
 package run.bottle.app.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
+import org.apache.commons.lang3.ObjectUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import run.bottle.app.model.entity.Chunk;
 import run.bottle.app.model.entity.FileInfo;
+import run.bottle.app.model.params.MergeFileParam;
 import run.bottle.app.service.ChunkService;
 import run.bottle.app.service.FileInfoService;
 
@@ -16,6 +18,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import static run.bottle.app.model.support.FileConst.DELIMITER;
 import static run.bottle.app.utils.FileUtils.generatePath;
 import static run.bottle.app.utils.FileUtils.getWorkDir;
 import static run.bottle.app.utils.FileUtils.merge;
@@ -74,16 +77,18 @@ public class UploadController {
 
     /**
      * 合并
-     * @param fileInfo
+     * @param mergeFileParam
      * @return
      */
     @PostMapping("/mergeFile")
-    public String mergeFile(@RequestBody FileInfo fileInfo) {
-        String filename = specialName(fileInfo.getFileName());
-        String file = getWorkDir() + "/root/" + filename;
-        String folder = getWorkDir() + "/" + fileInfo.getIdentifier();
+    public String mergeFile(@RequestBody MergeFileParam mergeFileParam) {
+        String filename = specialName(mergeFileParam.getFileName());
+        String file = getWorkDir() + mergeFileParam.getPath() + DELIMITER + filename;
+        String folder = getWorkDir() + "/" + mergeFileParam.getIdentifier();
         merge(file, folder, filename);
-        fileInfo.setLocation(file);
+        mergeFileParam.setLocation(file);
+        FileInfo fileInfo = new FileInfo();
+        BeanUtils.copyProperties(fileInfo,mergeFileParam);
         fileInfoService.addFileInfo(fileInfo);
 
         return "合并成功";

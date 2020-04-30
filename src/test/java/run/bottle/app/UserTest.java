@@ -15,6 +15,7 @@ public class UserTest {
 
     @Test
     public void initUser(){
+        userService.removeAll();
         User user = new User();
         user.setNickname("admin");
         user.setUsername("admin");
