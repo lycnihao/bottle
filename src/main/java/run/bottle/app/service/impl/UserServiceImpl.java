@@ -1,9 +1,12 @@
 package run.bottle.app.service.impl;
 
 import cn.hutool.crypto.digest.BCrypt;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import run.bottle.app.exception.BadRequestException;
 import run.bottle.app.exception.ForbiddenException;
 import run.bottle.app.model.entity.User;
 import run.bottle.app.repository.UserRepository;
@@ -57,5 +60,18 @@ public class UserServiceImpl extends AbstractCrudService<User, Integer> implemen
     public boolean passwordMatch(User user, String plainPassword) {
         Assert.notNull(user, "User must not be null");
         return !StringUtils.isBlank(plainPassword) && BCrypt.checkpw(plainPassword, user.getPassword());
+    }
+
+    @Override
+    public void setPassword(User user, String plainPassword) {
+        user.setPassword(BCrypt.hashpw(plainPassword, BCrypt.gensalt()));
+    }
+
+    @Override
+    public User createBy(User userParam) {
+        User user = new User();
+        BeanUtils.copyProperties(userParam, user);
+        setPassword(user, userParam.getPassword());
+        return create(user);
     }
 }

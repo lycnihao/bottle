@@ -57,4 +57,19 @@ public interface UserService extends CrudService<User, Integer> {
      * @return 如果给定的密码与用户密码匹配，则为true；否则为假
      */
     boolean passwordMatch(@NonNull User user, @Nullable String plainPassword);
+
+    /**
+     * 设置密码
+     *
+     * @param user          用户
+     * @param plainPassword 普通密码
+     */
+    void setPassword(@NonNull User user, @NonNull String plainPassword);
+
+    /**
+     * 创建用户
+     * @param userParam 用户参数
+     * @return 用户
+     */
+    User createBy(@NonNull User userParam);
 }
