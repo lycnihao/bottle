@@ -71,7 +71,7 @@ public class AdminController {
     public BaseResponse<String> installBlog(@RequestBody InstallParam installParam) {
         boolean isInstalled =  this.isInstall();
         if (isInstalled) {
-            throw new BadRequestException("该博客已初始化，不能再次安装！");
+            throw new BadRequestException("系统已初始化，不能再次安装！");
         }
         // 初始化设置
         initSettings(installParam);

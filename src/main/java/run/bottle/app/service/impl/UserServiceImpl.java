@@ -1,12 +1,10 @@
 package run.bottle.app.service.impl;
 
 import cn.hutool.crypto.digest.BCrypt;
-import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-import run.bottle.app.exception.BadRequestException;
 import run.bottle.app.exception.ForbiddenException;
 import run.bottle.app.model.entity.User;
 import run.bottle.app.repository.UserRepository;

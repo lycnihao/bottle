@@ -51,7 +51,7 @@ public class WebMvcAutoConfiguration implements WebMvcConfigurer {
         registry.addInterceptor(adminAuthenticationInterceptor)
                 .addPathPatterns("/**")
                 .addPathPatterns("/api/**")
-                .excludePathPatterns("/upload/**")
+                .excludePathPatterns("/s/**")
                 .excludePathPatterns("/admin/**")
                 .excludePathPatterns("/js/**","/css/**","/assets/**","/logo.png","/favicon.ico")
                 .excludePathPatterns("/api/admin/login","/api/admin/is_installed","/api/admin/installations")

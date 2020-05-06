@@ -6,6 +6,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import run.bottle.app.cache.LocalCache;
+import run.bottle.app.exception.BadRequestException;
 import run.bottle.app.exception.NotFoundException;
 import run.bottle.app.exception.ServiceException;
 import run.bottle.app.model.entity.User;
@@ -42,17 +43,17 @@ public class AdminServiceImpl implements AdminService {
             user = Validator.isEmail(username) ?
                     userService.getByEmailOfNonNull(username) : userService.getByUsernameOfNonNull(username);
         } catch (NotFoundException e) {
-            throw new ServiceException(mismatchTip);
+            throw new BadRequestException(mismatchTip);
         }
 
         if (ObjectUtils.isEmpty(user)) {
-            throw new ServiceException("账号或密码不匹配");
+            throw new BadRequestException("账号或密码不匹配");
         }
 
         userService.mustNotExpire(user);
 
         if (!userService.passwordMatch(user, password)) {
-            throw new ServiceException(mismatchTip);
+            throw new BadRequestException(mismatchTip);
         }
         System.out.println("登录成功");
         return  buildAuthToken(user);
@@ -63,7 +64,7 @@ public class AdminServiceImpl implements AdminService {
         UserDetail userDetail = SecurityContextHolder.getContext();
 
         if (userDetail == null) {
-            throw new ServiceException("您尚未登录，因此无法注销");
+            throw new BadRequestException("您尚未登录，因此无法注销");
         }
 
         User user = userDetail.getUser();

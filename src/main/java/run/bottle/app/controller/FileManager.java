@@ -10,7 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.MediaType;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
-import run.bottle.app.exception.ServiceException;
+import run.bottle.app.exception.BadRequestException;
 import run.bottle.app.model.dto.FileItemDTO;
 import run.bottle.app.model.dto.FolderNode;
 import run.bottle.app.model.support.BaseResponse;
@@ -39,7 +39,7 @@ public class FileManager {
      * 展示文件列表
      */
     @RequestMapping("list")
-    public BaseResponse list(String path) throws ServiceException {
+    public BaseResponse list(String path) {
 
         // 返回的结果集
         List<FileItemDTO> fileItems = new ArrayList<>();
@@ -63,7 +63,7 @@ public class FileManager {
             }
         } catch (IOException e) {
             e.printStackTrace();
-            throw new ServiceException("文件获取异常");
+            throw new BadRequestException("文件获取异常");
         }
         return BaseResponse.ok(fileItems.stream().sorted(Comparator.comparing(FileItemDTO::getIsDirectory).reversed()));
     }
@@ -78,12 +78,12 @@ public class FileManager {
             log.info("创建文件夹-->",newDir);
             if (!newDir.mkdir()) {
                 log.error("目录【{}】已存在，不能重复创建",newDir);
-                throw new ServiceException("目录【" + newPath + "】已存在，不能重复创建");
+                throw new BadRequestException("目录【" + newPath + "】已存在，不能重复创建");
             }
             return BaseResponse.ok("创建成功");
         } catch (Exception e) {
             e.printStackTrace();
-            throw new ServiceException(e.getMessage()).setErrorData(e);
+            throw new BadRequestException(e.getMessage()).setErrorData(e);
         }
     }
 
@@ -108,7 +108,7 @@ public class FileManager {
             }
             return BaseResponse.ok("保存成功");
         } catch (Exception e) {
-            throw new ServiceException("保存失败").setErrorData(e);
+            throw new BadRequestException("保存失败").setErrorData(e);
         }
     }
 
@@ -131,7 +131,7 @@ public class FileManager {
             return BaseResponse.ok("保存成功");
         } catch (Exception e) {
             e.printStackTrace();
-            throw new ServiceException("保存失败").setErrorData(e);
+            throw new BadRequestException("保存失败").setErrorData(e);
         }
     }
 
@@ -159,11 +159,11 @@ public class FileManager {
             }
             return BaseResponse.ok("保存成功");
         } catch (FileExistsException e) {
-            throw new ServiceException("目标文件已存在").setErrorData(e);
+            throw new BadRequestException("目标文件已存在").setErrorData(e);
         }
         catch (Exception e) {
             e.printStackTrace();
-            throw new ServiceException("保存失败").setErrorData(e);
+            throw new BadRequestException("保存失败").setErrorData(e);
         }
     }
 
@@ -178,13 +178,13 @@ public class FileManager {
                 String path = items[i];
                 File srcFile = new File(getWorkDir(), path);
                 if (!FileUtils.deleteQuietly(srcFile)) {
-                    throw new ServiceException("删除失败: " + srcFile.getAbsolutePath());
+                    throw new BadRequestException("删除失败: " + srcFile.getAbsolutePath());
                 }
             }
             return BaseResponse.ok("删除成功");
         } catch (Exception e) {
             e.printStackTrace();
-            throw new ServiceException("删除失败").setErrorData(e);
+            throw new BadRequestException("删除失败").setErrorData(e);
         }
     }
 
