@@ -29,4 +29,9 @@ public class ShareServiceImpl extends AbstractCrudService<Share, Integer> implem
   public Page<Share> pageBy(ShareParam shareParam, Pageable pageable) {
     return listAll(pageable);
   }
+
+  @Override
+  public Share findByKey(String key) {
+    return shareRepository.findByFileKey(key);
+  }
 }

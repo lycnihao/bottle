@@ -8,4 +8,5 @@ import run.bottle.app.service.base.CrudService;
 
 public interface ShareService extends CrudService<Share, Integer> {
   Page<Share> pageBy(ShareParam shareParam, Pageable pageable);
+  Share findByKey(String key);
 }

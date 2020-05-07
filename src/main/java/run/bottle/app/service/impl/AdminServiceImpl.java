@@ -63,7 +63,7 @@ public class AdminServiceImpl implements AdminService {
     public void clearToken() {
         UserDetail userDetail = SecurityContextHolder.getContext();
 
-        if (userDetail == null) {
+        if (userDetail == null || userDetail.getUser() == null) {
             throw new BadRequestException("您尚未登录，因此无法注销");
         }
 

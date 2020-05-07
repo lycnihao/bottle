@@ -4,5 +4,5 @@ import run.bottle.app.model.entity.Share;
 import run.bottle.app.repository.base.BaseRepository;
 
 public interface ShareRepository extends BaseRepository<Share, Integer> {
-
+  Share findByFileKey(String key);
 }

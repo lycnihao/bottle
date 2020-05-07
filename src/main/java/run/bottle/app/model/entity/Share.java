@@ -1,11 +1,15 @@
 package run.bottle.app.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import lombok.Data;
 import lombok.ToString;
 
@@ -50,15 +54,31 @@ public class Share {
   private String mediaType;
 
   /**
-   * 附件后缀，如png, zip, mp4, jpge
-   */
-  @Column(name = "suffix", length = 50)
-  private String suffix;
-
-  /**
    * 附件大小
    */
   @Column(name = "size", nullable = false)
   private Long size;
+
+  /**
+   * 加密
+   */
+  @Column(name = "password")
+  private String password;
+
+  /**
+   * 分享时间
+   */
+  @Column(name = "create_time", nullable = false)
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  @Temporal(TemporalType.TIMESTAMP)
+  private Date createTime;
+
+  /**
+   * 失效时间
+   */
+  @Column(name = "expired_time")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  @Temporal(TemporalType.TIMESTAMP)
+  private Date expiredTime;
 
 }
