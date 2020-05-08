@@ -26,6 +26,7 @@ import run.bottle.app.model.enums.ExpiredTypeEnums;
 import run.bottle.app.model.params.SharesParam;
 import run.bottle.app.model.support.BaseResponse;
 import run.bottle.app.service.ShareService;
+import run.bottle.app.utils.FileHashCode;
 
 /**
  * 文件分享
@@ -37,8 +38,6 @@ import run.bottle.app.service.ShareService;
 @RestController
 @RequestMapping(value = "api/admin/shares")
 public class SharesController {
-
-  private final long timeMillis = 24 * 60 * 60 * 1000;
 
   @Autowired
   private ShareService shareService;
@@ -55,14 +54,15 @@ public class SharesController {
     try {
       BasicFileAttributes attrs = Files.readAttributes(pathObj, BasicFileAttributes.class);
       String mediaType = Files.probeContentType(pathObj);
-      share.setFileKey(sharesParam.getPath());
+      share.setFileKey(FileHashCode.md5HashCode(pathObj.toAbsolutePath().toString()));
       share.setTitle(pathObj.getFileName().toString() );
       share.setSize(attrs.size());
       share.setPath(sharesParam.getPath());
       share.setMediaType( StringUtils.isEmpty(mediaType) ? "" : MediaType.valueOf(mediaType).toString());
       share.setCreateTime(new Date());
+      long timeMillis = 24 * 60 * 60 * 1000;
       if (sharesParam.getExpiredType() == ExpiredTypeEnums.DAY.getCode()) {
-        share.setExpiredTime(new Date(System.currentTimeMillis() + timeMillis ));
+        share.setExpiredTime(new Date(System.currentTimeMillis() + timeMillis));
       } else if (sharesParam.getExpiredType() == ExpiredTypeEnums.WEEK.getCode()) {
         share.setExpiredTime(new Date(System.currentTimeMillis() + (7 * timeMillis) ));
       } else if (sharesParam.getExpiredType() == ExpiredTypeEnums.MONTH.getCode()) {
