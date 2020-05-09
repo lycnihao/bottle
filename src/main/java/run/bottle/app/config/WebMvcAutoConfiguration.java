@@ -54,7 +54,7 @@ public class WebMvcAutoConfiguration implements WebMvcConfigurer {
                 .excludePathPatterns("/s/**")
                 .excludePathPatterns("/admin/**")
                 .excludePathPatterns("/js/**","/css/**","/assets/**","/logo.png","/favicon.ico")
-                .excludePathPatterns("/api/admin/login","/api/admin/logout","/api/admin/is_installed","/api/admin/installations")
+                .excludePathPatterns("/api/admin/login","/api/admin/logout","/api/admin/is_installed","/api/admin/installations","/api/admin/shares/key/**")
                 .excludePathPatterns("/api/admin/fileManager/chunk")
                 .excludePathPatterns("/install")
                 .excludePathPatterns("/error");

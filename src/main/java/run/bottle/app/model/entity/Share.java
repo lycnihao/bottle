@@ -69,7 +69,7 @@ public class Share {
    * 分享时间
    */
   @Column(name = "create_time", nullable = false)
-  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
   @Temporal(TemporalType.TIMESTAMP)
   private Date createTime;
 
@@ -77,7 +77,7 @@ public class Share {
    * 失效时间
    */
   @Column(name = "expired_time")
-  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
   @Temporal(TemporalType.TIMESTAMP)
   private Date expiredTime;
 
