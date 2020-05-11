@@ -17,6 +17,7 @@ import run.bottle.app.utils.FileUtils;
 
 import static run.bottle.app.model.support.FileConst.DELIMITER;
 import static run.bottle.app.model.support.FileConst.USER_HOME;
+import static run.bottle.app.utils.FileUtils.getWorkDir;
 
 /**
  * WebMvc configuration.
@@ -54,7 +55,8 @@ public class WebMvcAutoConfiguration implements WebMvcConfigurer {
                 .excludePathPatterns("/s/**")
                 .excludePathPatterns("/admin/**")
                 .excludePathPatterns("/js/**","/css/**","/assets/**","/logo.png","/favicon.ico")
-                .excludePathPatterns("/api/admin/login","/api/admin/logout","/api/admin/is_installed","/api/admin/installations","/api/admin/shares/key/**")
+                .excludePathPatterns("/api/admin/login","/api/admin/logout","/api/admin/is_installed","/api/admin/installations"
+                    ,"/api/admin/shares/key/**","/api/admin/shares/s/**")
                 .excludePathPatterns("/api/admin/fileManager/chunk")
                 .excludePathPatterns("/install")
                 .excludePathPatterns("/error");
@@ -67,6 +69,9 @@ public class WebMvcAutoConfiguration implements WebMvcConfigurer {
 
         registry.addResourceHandler("upload/**")
                 .addResourceLocations(FILE_PROTOCOL + workDir);
+
+        registry.addResourceHandler("s/**")
+            .addResourceLocations(FILE_PROTOCOL + workDir);
 
         registry.addResourceHandler("/**","admin/**")
                 .addResourceLocations("classpath:/templates/admin/");

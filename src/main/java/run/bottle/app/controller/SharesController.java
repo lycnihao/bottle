@@ -3,12 +3,16 @@ package run.bottle.app.controller;
 import static run.bottle.app.utils.FileUtils.getWorkDir;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Date;
 import java.util.List;
+import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +32,6 @@ import run.bottle.app.model.params.SharesParam;
 import run.bottle.app.model.support.BaseResponse;
 import run.bottle.app.service.ShareService;
 import run.bottle.app.utils.BottleUtils;
-import run.bottle.app.utils.FileHashCode;
 
 /**
  * 文件分享
@@ -43,6 +46,13 @@ public class SharesController {
 
   @Autowired
   private ShareService shareService;
+
+  @GetMapping(value = "s/{key}")
+  private void shareReSources(@PathVariable("key")String key, HttpServletResponse response)
+      throws IOException {
+    Share share = shareService.findByKey(key);
+    response.sendRedirect("/s/" + encoderUrl(share.getPath()));
+  }
 
   @GetMapping(value = "key/{key}")
   private BaseResponse<Share> share(@PathVariable("key")String key){
@@ -96,5 +106,11 @@ public class SharesController {
     Share share = shareService.findByKey(key);
     shareService.remove(share);
     return BaseResponse.ok("删除成功");
+  }
+
+  private String encoderUrl(String str) throws UnsupportedEncodingException {
+    String name = str.substring(str.lastIndexOf("/") + 1);
+    String path = str.substring(0, str.lastIndexOf("/") +1);
+    return path + URLEncoder.encode(name,"UTF-8");
   }
 }
